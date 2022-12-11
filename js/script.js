@@ -475,11 +475,42 @@ slider.append(indicators);
 	// localStorage.clear();
 
 //calculator
-
+let sex,height, weight, age, ratio;
 const result = document.querySelector('.calculating__result span');
-let sex = 'female',
-	height, weight, age,
-	ratio = 1.375;
+	if (localStorage.getItem('sex')){
+		sex = localStorage.getItem('sex');
+	} else {
+		sex = 'female';
+		localStorage.setItem('sex', 'female');
+	}
+	if (localStorage.getItem('ratio')){
+		ratio = localStorage.getItem('ratio');
+	} else {
+		ratio = 1.375;
+		localStorage.setItem('ratio', 1.375);
+	}
+
+function initLocalsetting(selector, activeClass){
+	const elem = document.querySelectorAll(`${selector} div`),
+			sex = localStorage.getItem('sex'),
+			ratio = localStorage.getItem('ratio');
+	elem.forEach(elem => {
+		elem.classList.remove(activeClass);
+
+		if(elem.getAttribute('id') === sex){
+			elem.classList.add(activeClass);
+		}
+
+		if(elem.getAttribute('data-ratio') === ratio){
+			elem.classList.add(activeClass);
+		}
+
+	});
+
+}
+
+initLocalsetting('#gender', 'calculating__choose-item_active');
+initLocalsetting('.calculating__choose_big', 'calculating__choose-item_active');
 
 function calcTotal(){
 	if (!sex || !height || !weight || !age || !ratio){
@@ -496,15 +527,17 @@ function calcTotal(){
 
 calcTotal();
 
-function getStaticInformation (parentSelector, activeClass){
-	const elements = document.querySelectorAll(`${parentSelector} div`);
+function getStaticInformation (selector, activeClass){
+	const elements = document.querySelectorAll(`${selector} div`);
 
 	elements.forEach(elem => {
 		elem.addEventListener('click', (e) => {
 			if(e.target.getAttribute('data-ratio')){
 				ratio = +e.target.getAttribute('data-ratio');
+				localStorage.setItem('ratio', +e.target.getAttribute('data-ratio'));
 			} else{
 				sex = e.target.getAttribute('id');
+				localStorage.setItem('sex', e.target.getAttribute('id'));
 			}
 			elements.forEach(elem => {
 				elem.classList.remove(activeClass);
@@ -524,6 +557,12 @@ function getDynamicInformation(selector) {
 	const input = document.querySelector(selector);
 
 	input.addEventListener('input', () => {
+		if(input.value.match(/\D/g)){
+			input.style.border = '1px solid red';
+		} else {
+			input.style.border = 'none';
+		}
+
 		switch(input.getAttribute('id')){
 			case 'height':
 				height = +input.value;
