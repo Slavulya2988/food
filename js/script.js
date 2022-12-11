@@ -392,15 +392,32 @@ slider.append(indicators);
 		indicators.append(dot);
 		dots.push(dot);
 	}
+// преобразование строки у число з використанням регулярних виразів
+	function deleteNotDigits(str){
+		return +str.replace(/\D/g, '');
+	}
 
+// установка стіля для актівнї точки
+	function setDotStyle(){
+		dots.forEach(item => item.style.opacity = '0.5');
+		dots[indexSlider - 1].style.opacity = '1';
+	}
+// правільное отображеніе индекса на странице
+	function setCurIndexSlider(){
+		if(sliders.length < 10){
+			current.textContent = `0${indexSlider}`;
+		} else {
+			current.textContent = indexSlider;
+		}
+	}
 
 	next.addEventListener('click', () => {
 		// механізм проверки смещения - offset
-		if (offset == +width.slice(0, width.length - 2) * (sliders.length - 1)) { // '500px' -- если ето последний слайд, то смещение к первому слайду
+		if (offset == deleteNotDigits(width) * (sliders.length - 1)) { // '500px' -- если ето последний слайд, то смещение к первому слайду
 			offset = 0;
 		} else {
 
-			offset += +width.slice(0, width.length - 2);// не последний слайд то добавляем смещение на ширину слада
+			offset += deleteNotDigits(width);// не последний слайд то добавляем смещение на ширину слада
 		}
 		slidesField.style.transform = `translateX(-${offset}px)`;
 
@@ -411,22 +428,17 @@ slider.append(indicators);
 				indexSlider++;
 			}
 		// установка текущего индекса на странице
-			if(sliders.length < 10){
-				current.textContent = `0${indexSlider}`;
-			} else {
-				current.textContent = indexSlider;
-			}
+		setCurIndexSlider();
 		// for dots
-		dots.forEach(item => item.style.opacity = '0.5');
-		dots[indexSlider - 1].style.opacity = '1';
+		setDotStyle();
 	});
 
 	prev.addEventListener('click', () => {
 		if (offset == 0) {
-			offset = +width.slice(0, width.length - 2) * (sliders.length - 1);
+			offset = deleteNotDigits(width) * (sliders.length - 1);
 
 		} else {
-			offset -= +width.slice(0, width.length - 2);
+			offset -= deleteNotDigits(width);
 		}
 
 		slidesField.style.transform = `translateX(-${offset}px)`;
@@ -437,15 +449,10 @@ slider.append(indicators);
 		} else{
 			indexSlider--;
 		}
-		// установка текущего индекса а странице
-		if(sliders.length < 10){
-			current.textContent = `0${indexSlider}`;
-		} else {
-			current.textContent = indexSlider;
-		}
+		// установка текущего индекса на странице
+			setCurIndexSlider();
 		// for dots
-		dots.forEach(item => item.style.opacity = '0.5');
-		dots[indexSlider - 1].style.opacity = '1';
+			setDotStyle();
 	});
 
 // добавление точек к слайдеру
@@ -454,21 +461,16 @@ slider.append(indicators);
 			const slideTo = e.target.getAttribute('data-slide-to');
 
 			indexSlider = slideTo;
-			offset = +width.slice(0, width.length - 2) * (slideTo - 1);
+			offset = deleteNotDigits(width) * (slideTo - 1);
 			slidesField.style.transform = `translateX(-${offset}px)`;
 
-			// установка текущего индекса а странице
-			if(sliders.length < 10){
-				current.textContent = `0${indexSlider}`;
-			} else {
-				current.textContent = indexSlider;
-			}
-
-			dots.forEach(item => item.style.opacity = '0.5');
-			dots[indexSlider - 1].style.opacity = '1';
-
+			// установка текущего индекса на странице
+			setCurIndexSlider();
+			// for dots
+			setDotStyle();
 		});
-});
+	});
 
-
+	// localStorage.setItem('number', 5);
+	// localStorage.clear();
 });
