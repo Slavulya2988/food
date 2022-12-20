@@ -376,15 +376,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-function slider(){
-	const sliders = document.querySelectorAll('.offer__slide'),
-		slider = document.querySelector('.offer__slider'),
-		next = document.querySelector('.offer__slider-next'),
-		prev = document.querySelector('.offer__slider-prev'),
-		total = document.querySelector('#total'),
-		current = document.querySelector('#current'),
-		slidesWrapper = document.querySelector('.offer__slider-wrapper'),
-		slidesField = document.querySelector('.offer__slider-inner'),
+function slider({container, slide, nextArrow, prevArrow, totalCounter, currentCounter, wrapper, field}){
+	const sliders = document.querySelectorAll(slide),
+		slider = document.querySelector(container),
+		next = document.querySelector(nextArrow),
+		prev = document.querySelector(prevArrow),
+		total = document.querySelector(totalCounter),
+		current = document.querySelector(currentCounter),
+		slidesWrapper = document.querySelector(wrapper),
+		slidesField = document.querySelector(field),
 		width = window.getComputedStyle(slidesWrapper).width;
 
 let indexSlider = 1;
@@ -799,6 +799,14 @@ const modalTimerId = setTimeout(() => (0,_modules_modal__WEBPACK_IMPORTED_MODULE
 (0,_modules_modal__WEBPACK_IMPORTED_MODULE_2__["default"])('[data-modal]','.modal', modalTimerId);
 (0,_modules_cards__WEBPACK_IMPORTED_MODULE_3__["default"])();
 (0,_modules_slider__WEBPACK_IMPORTED_MODULE_4__["default"])({
+	container: '.offer__slider',
+	nextArrow: '.offer__slider-next',
+	prevArrow: '.offer__slider-prev',
+	totalCounter: '#total',
+	currentCounter: '#current',
+	wrapper: '.offer__slider-wrapper',
+	field: '.offer__slider-inner',
+	slide: '.offer__slide'
 
 });
 (0,_modules_calc__WEBPACK_IMPORTED_MODULE_5__["default"])();
