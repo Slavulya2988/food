@@ -1,6 +1,5 @@
-function timer(){
+function timer(id, deadLine){
 
-const deadLine = '2022-12-31 GMT+0200';
 // получиім разницн между датами
 function getTimeRemaining(endTime) {
 	// Date.parse(endTime) количество милисекунд до которого нам нужно дойти
@@ -62,6 +61,6 @@ function setClock(selector, endTime){
 
 	}
 }
-	setClock('.timer', deadLine);
+	setClock(id, deadLine);
 }
-module.exports = timer;
+export default timer;

@@ -156,4 +156,4 @@ slider.append(indicators);
 
 }
 
-module.exports = slider;
+export default slider;
