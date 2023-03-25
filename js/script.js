@@ -16,7 +16,7 @@ tabs({
 	tabsParentselector: '.tabheader__items',
 	activeClass: 'tabheader__item_active'
 });
-timer('.timer', '2022-12-31 GMT+0200');
+timer('.timer', '2023-06-31 GMT+0200');
 modal('[data-modal]','.modal', modalTimerId);
 cards();
 slider({
